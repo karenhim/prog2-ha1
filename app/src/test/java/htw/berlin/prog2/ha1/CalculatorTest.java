@@ -3,6 +3,8 @@ package htw.berlin.prog2.ha1;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.spi.CalendarDataProvider;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("Retro calculator")
@@ -90,5 +92,26 @@ class CalculatorTest {
 
 
     //TODO hier weitere Tests erstellen
+
+    /**
+     * Teilaufgabe 1
+     */
+    @Test
+    @DisplayName("Should correctly give numbers in subtraction")
+    void testSubtraction(){
+        Calculator calc= new Calculator();
+        calc.pressDigitKey(5);
+        calc.pressBinaryOperationKey("-");
+        calc.pressDigitKey(1);
+        calc.pressEqualsKey();
+
+        String expected= "4";
+        String actual = calc.readScreen();
+        assertEquals(expected, actual);
+    }
+    /**
+     * Teilaufgabe 2
+     */
+
 }
 
