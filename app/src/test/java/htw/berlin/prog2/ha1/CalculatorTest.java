@@ -110,8 +110,40 @@ class CalculatorTest {
         assertEquals(expected, actual);
     }
     /**
-     * Teilaufgabe 2
+     * Teilaufgabe 2.1
      */
+    @Test
+    @DisplayName("Should display errror in inversion of 0")
+    void testZeroInverse(){
+        Calculator calc=new Calculator();
+        calc.pressDigitKey(0);
+        calc.pressUnaryOperationKey("1/x");
+        calc.pressEqualsKey();
+
+        String expected="Error";
+        String actual=calc.readScreen();
+        assertEquals(expected, actual);
+    }
+    /**
+     * Teilaufgabe 2.2
+     */
+    @Test
+    @DisplayName("Should correctly handle calculation of negative operands")
+    void testMinusOperand(){
+        Calculator calc=new Calculator();
+        calc.pressDigitKey(2);
+        calc.pressBinaryOperationKey("+");
+        calc.pressNegativeKey();
+        calc.pressDigitKey(1);
+        calc.pressEqualsKey();
+
+        String expected = "1";
+        String actual=calc.readScreen();
+
+        assertEquals(expected, actual);
+
+
+    }
 
 }
 
