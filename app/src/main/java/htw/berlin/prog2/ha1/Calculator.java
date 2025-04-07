@@ -13,6 +13,7 @@ public class Calculator {
     private double latestValue;
 
     private String latestOperation = "";
+    private boolean isNewInput=false; //Teilaufgabe 3.2
 
     /**
      * @return den aktuellen Bildschirminhalt als String
@@ -31,7 +32,20 @@ public class Calculator {
     public void pressDigitKey(int digit) {
         if(digit > 9 || digit < 0) throw new IllegalArgumentException();
 
-        if(screen.equals("0") || latestValue == Double.parseDouble(screen)) screen = "";
+        //if(screen.equals("0") || latestValue == Double.parseDouble(screen)) screen = "";
+
+        /**
+         * Teilaufgabe 3.2
+         *
+         * - boolean var isNewInput to determine when to clear the screen for a new number after a binary operation.
+         * - When a user presses a binary operation key, the next digit entry starts a new number on the screen instead of appending to the previous one.
+         *
+         */
+
+        if (isNewInput||screen.equals("0")){
+            screen="";
+            isNewInput=false; //resets after typing new input
+        }
 
         screen = screen + digit;
     }
@@ -62,6 +76,8 @@ public class Calculator {
     public void pressBinaryOperationKey(String operation)  {
         latestValue = Double.parseDouble(screen);
         latestOperation = operation;
+
+        isNewInput=true; //Teilaufgabe 3.2
     }
 
     /**
@@ -74,6 +90,18 @@ public class Calculator {
     public void pressUnaryOperationKey(String operation) {
         latestValue = Double.parseDouble(screen);
         latestOperation = operation;
+
+        /**
+         * Teilaufgabe 3.1
+         *- inverse operation (1/x) with zero, the screen will display "Error" instead of "Infinity"
+         * and ensures a clear error message for invalid operations.
+         */
+
+        if (Double.parseDouble(screen)==0 || operation.equals("1/x")){
+            screen= "Error";
+            return;
+        }
+
         var result = switch(operation) {
             case "√" -> Math.sqrt(Double.parseDouble(screen));
             case "%" -> Double.parseDouble(screen) / 100;
@@ -105,7 +133,7 @@ public class Calculator {
      * entfernt und der Inhalt fortan als positiv interpretiert.
      */
     public void pressNegativeKey() {
-        screen = screen.startsWith("-") ? screen.substring(1) : "-" + screen;
+       screen = screen.startsWith("-") ? screen.substring(1) : "-" + screen;
     }
 
     /**

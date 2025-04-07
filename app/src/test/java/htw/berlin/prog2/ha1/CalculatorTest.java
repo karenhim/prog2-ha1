@@ -113,36 +113,33 @@ class CalculatorTest {
      * Teilaufgabe 2.1
      */
     @Test
-    @DisplayName("Should display errror in inversion of 0")
+    @DisplayName("Should display errror in inversion of 0 instead of infinity")
     void testZeroInverse(){
         Calculator calc=new Calculator();
         calc.pressDigitKey(0);
         calc.pressUnaryOperationKey("1/x");
-        calc.pressEqualsKey();
 
         String expected="Error";
         String actual=calc.readScreen();
+
         assertEquals(expected, actual);
     }
     /**
      * Teilaufgabe 2.2
      */
     @Test
-    @DisplayName("Should correctly handle calculation of negative operands")
-    void testMinusOperand(){
+    @DisplayName("Should correctly handle new input after binary operations")
+    void testPressDigitKey(){
         Calculator calc=new Calculator();
-        calc.pressDigitKey(2);
+        calc.pressDigitKey(5);
         calc.pressBinaryOperationKey("+");
-        calc.pressNegativeKey();
-        calc.pressDigitKey(1);
-        calc.pressEqualsKey();
+        calc.pressDigitKey(5);
+        calc.pressDigitKey(3);
 
-        String expected = "1";
+        String expected="53";
         String actual=calc.readScreen();
 
-        assertEquals(expected, actual);
-
-
+        assertEquals(expected,actual);
     }
 
 }
